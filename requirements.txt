@@ -1,0 +1,36 @@
+# Core AI and LLM libraries
+ollama>=0.3.0
+streamlit>=1.32.0
+langchain>=0.1.0
+
+# Document processing
+PyPDF2>=3.0.1
+python-docx>=1.1.0
+python-multipart>=0.0.6
+
+# Vector embeddings and similarity search
+sentence-transformers>=2.2.2
+chromadb>=0.4.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Configuration and utilities
+python-dotenv>=1.0.0
+pyyaml>=6.0
+pathlib>=1.0.1
+
+# Web and API
+requests>=2.31.0
+flask>=3.0.0
+
+# Development and logging
+logging>=0.4.9.6
+
+# Optional: For better performance
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Optional: For advanced features
+faiss-cpu>=1.7.4
+huggingface-hub>=0.16.0

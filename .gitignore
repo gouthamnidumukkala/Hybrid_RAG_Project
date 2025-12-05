@@ -1,0 +1,10 @@
+__pycache__/ 
+venv/ 
+.DS_Store 
+.env 
+__MACOSX/ 
+data/chroma_db/ 
+data/bm25_index.pkl 
+data/processed_chunks.pkl 
+evaluation_results/ 
+results/ 
