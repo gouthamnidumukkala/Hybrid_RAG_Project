@@ -1,268 +1,188 @@
-# 🤖Hybrid RAG Assistant
+🚀 Hybrid Retrieval-Augmented Generation (RAG) System
 
-A professional-grade Retrieval Augmented Generation (RAG) system built with Streamlit, Ollama, and modern AI technologies.
+Final Project – Advanced AI / CSC 790
 
-## ✨ Features
+This repository contains a Hybrid Retrieval-Augmented Generation (RAG) system built with:
 
-- **💬 Chat Mode**: Direct conversation with specialized AI assistants
-- **📚 RAG Mode**: AI with document knowledge and context retrieval
-- **🔧 Specialized Chatbots**: Programmer, Teacher, Creative Writer, Analyst, and more
-- **📄 Document Processing**: Support for PDF, DOCX, TXT, and Markdown files
-- **🔍 Vector Search**: Advanced similarity search with ChromaDB
-- **⚙️ Configurable**: Extensive configuration options
-- **💾 Conversation Management**: Save and load chat history
-- **🎨 Professional UI**: Clean, responsive Streamlit interface
+FastAPI backend
 
-## 🛠️ Technology Stack
+BM25 Indexing (lexical retrieval)
 
-- **Frontend**: Streamlit
-- **AI/LLM**: Ollama (Llama 3.2)
-- **Vector Database**: ChromaDB
-- **Embeddings**: Sentence Transformers
-- **Document Processing**: PyPDF2, python-docx
-- **Configuration**: YAML + Environment Variables
+Dense vector search using Chroma + bge-m3 embeddings
 
-## 📁 Project Structure
+Reranking using bge-reranker
 
-```
+Local LLM generation using Ollama
+
+Answer verification using Qwen / Llama models
+
+SQuAD v1.1 dataset
+
+This system retrieves relevant documents, generates answers, and checks for hallucinations.
+
+📁 Project Structure
 Mahi_Hybrid_RAG/
-├── src/                          # Source code
-│   ├── core/                     # Core functionality
-│   │   ├── chatbot.py           # Chatbot classes
-│   │   └── rag.py               # RAG system
-│   ├── ui/                      # User interface
-│   │   └── streamlit_app.py     # Main Streamlit app
-│   └── utils/                   # Utilities
-│       └── config.py            # Configuration management
-├── config/                      # Configuration files
-│   ├── config.yaml              # Main configuration
-│   └── .env.example             # Environment template
-├── data/                        # Data directory
-│   ├── documents/               # Uploaded documents
-│   └── models/                  # Model files
-├── logs/                        # Application logs
-├── requirements.txt             # Python dependencies
-├── setup.sh                     # Setup script
-├── run_app.sh                   # Run script
-└── README.md                    # This file
-```
+│
+├── backend/
+│   ├── app.py                 # FastAPI entry point
+│   ├── bm25_indexer.py        # BM25 lexical search
+│   ├── chroma_store.py        # Vector DB (Chroma)
+│   ├── data_processor.py      # Dataset loading, preprocessing, chunking
+│   ├── hybrid_retriever.py    # Hybrid BM25 + Embeddings retrieval
+│   ├── answer_verifier.py     # LLM-based answer verification
+│
+├── config/
+│   └── settings.py            # Configuration file
+│
+├── data/
+│   └── SQuAD-v1.1.csv         # Dataset used for retrieval
+│
+├── evaluation/
+│   ├── evaluate_system.py
+│   ├── create_plots.py
+│   └── run_evaluation.py
+│
+├── results/ (ignored by git)
+├── requirements.txt
+├── simple_rag.py
+├── launch_rag_system.py
+└── README.md
 
-## 🚀 Quick Start
+⚙️ Installation Instructions
+1️⃣ Create a virtual environment
+python -m venv venv
 
-### 1. Setup
 
-```bash
-# Clone or ensure you're in the project directory
-cd Mahi_Hybrid_RAG
+Activate it:
 
-# Run the setup script
-./setup.sh
-```
+Windows
 
-This will:
-- Create a virtual environment
-- Install all dependencies
-- Set up Ollama and download the default model
-- Create necessary directories
-- Set up configuration files
+venv\Scripts\activate
 
-### 2. Configuration (Optional)
 
-```bash
-# Copy and edit environment variables
-cp config/.env.example config/.env
-# Edit config/.env with your API keys (if needed)
+Mac/Linux
 
-# Modify config/config.yaml for custom settings
-```
-
-### 3. Run the Application
-
-```bash
-# Start the application
-./run_app.sh
-```
-
-The application will be available at `http://localhost:8501`
-
-## 📋 Manual Installation
-
-If you prefer manual installation:
-
-```bash
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\\Scripts\\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Create directories
-mkdir -p data/{documents,models} logs
-
-# Install and start Ollama
-# Visit https://ollama.ai/ for installation instructions
-ollama pull llama3.2:1b
-
-# Start the application
-streamlit run src/ui/streamlit_app.py
-```
-
-## 🔧 Configuration
-
-### Main Configuration (`config/config.yaml`)
-
-- **Models**: Configure available AI models
-- **RAG Settings**: Chunk size, overlap, similarity threshold
-- **UI Settings**: Page title, layout, theme
-- **Chat Settings**: History limit, streaming, temperature
-
-### Environment Variables (`config/.env`)
-
-- `OLLAMA_API_KEY`: Ollama API key (if required)
-- `HUGGINGFACE_API_KEY`: Hugging Face API key (for embeddings)
-- `OPENAI_API_KEY`: OpenAI API key (alternative embeddings)
-
-## 🎯 Usage
-
-### Chat Mode
-
-1. Select "Chat Mode" in the sidebar
-2. Choose a model and specialty (Programmer, Teacher, etc.)
-3. Start chatting!
-
-### RAG Mode
-
-1. Select "RAG Mode" in the sidebar
-2. Upload documents using the document management section
-3. Ask questions about your documents
-4. View sources and relevance scores
-
-### Features
-
-- **Model Selection**: Switch between different Llama models
-- **Temperature Control**: Adjust response creativity
-- **Conversation History**: Automatic chat history
-- **Save/Load**: Export and import conversations
-- **Document Management**: Upload, process, and delete documents
-- **Source Tracking**: See which documents influenced responses
-
-## 📚 Supported Document Formats
-
-- **PDF** (`.pdf`): Adobe PDF documents
-- **Word** (`.docx`): Microsoft Word documents
-- **Text** (`.txt`): Plain text files
-- **Markdown** (`.md`): Markdown documents
-
-## 🔍 Advanced Features
-
-### Specialized Chatbots
-
-- **Programmer**: Expert in coding and software development
-- **Teacher**: Educational explanations and learning support
-- **Creative**: Creative writing and artistic content
-- **Analyst**: Data analysis and research insights
-- **Customer Support**: Professional customer service
-- **Medical**: Health and medical information
-- **Legal**: Legal information and guidance
-
-### RAG System
-
-- **Intelligent Chunking**: Smart document segmentation
-- **Vector Similarity**: Semantic search using embeddings
-- **Context Ranking**: Relevance-based document retrieval
-- **Source Attribution**: Track information sources
-- **Multi-document**: Query across multiple documents
-
-## 🛡️ Error Handling
-
-The application includes comprehensive error handling:
-
-- **Model Loading**: Graceful fallbacks for missing models
-- **Document Processing**: Error reporting for failed uploads
-- **API Failures**: Informative error messages
-- **Configuration**: Default values for missing settings
-
-## 📊 Logging
-
-Logs are stored in the `logs/` directory:
-
-- `streamlit_app.log`: Main application logs
-- `conversation_*.json`: Saved conversations
-
-## 🧪 Development
-
-### Project Structure
-
-- `src/core/`: Core business logic
-- `src/ui/`: User interface components
-- `src/utils/`: Utility functions and configuration
-- `config/`: Configuration files and templates
-- `data/`: Runtime data storage
-
-### Adding New Features
-
-1. **New Chatbot Specialty**: Add to `SPECIALTIES` in `chatbot.py`
-2. **New Document Format**: Extend `DocumentProcessor` in `rag.py`
-3. **UI Components**: Modify `streamlit_app.py`
-4. **Configuration**: Update `config.yaml`
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Troubleshooting
-
-### Common Issues
-
-**Ollama not found**
-```bash
-# Install Ollama from https://ollama.ai/
-# Then pull the model:
-ollama pull llama3.2:1b
-```
-
-**Import errors**
-```bash
-# Ensure virtual environment is activated:
 source venv/bin/activate
-# Reinstall requirements:
+
+
+Install dependencies:
+
 pip install -r requirements.txt
-```
 
-**Port already in use**
-```bash
-# Use a different port:
-streamlit run src/ui/streamlit_app.py --server.port 8502
-```
+2️⃣ Install Ollama + required models
 
-**Memory issues with large documents**
-- Reduce chunk size in `config/config.yaml`
-- Process smaller documents
-- Increase system memory
+Download Ollama:
+https://ollama.com/download
 
-### Performance Tips
+Pull models:
 
-- Use smaller models for faster responses
-- Adjust chunk size for optimal performance
-- Enable GPU acceleration if available
-- Monitor memory usage with large document sets
+ollama pull qwen2.5:7b-instruct-q3_k_m
+ollama pull bge-m3
+ollama pull xitao/bge-reranker-v2-m3
 
-## 📞 Support
 
-For issues and questions:
-1. Check the troubleshooting section
-2. Review the logs in `logs/`
-3. Create an issue with detailed information
+Make sure Ollama is running.
 
----
+3️⃣ Run the FastAPI backend
 
-**Built with ❤️ using modern AI technologies**
+From the main project folder:
+
+cd backend
+python app.py
+
+
+You'll see:
+
+Uvicorn running on http://127.0.0.1:8000
+
+
+Open Swagger UI:
+
+👉 http://localhost:8000/docs
+
+🧪 API Endpoints
+🔍 POST /search
+
+Hybrid document retrieval (BM25 + embeddings).
+
+Example:
+
+{
+  "query": "earthquake"
+}
+
+🤖 POST /rag
+
+Retrieval + LLM generation + answer verification.
+
+Example:
+
+{
+  "query": "What happened during the 2008 Sichuan earthquake?"
+}
+
+
+Response includes:
+
+retrieved documents
+
+generated answer
+
+verification score
+
+hallucination risk
+
+📘 Dataset Used
+
+This project uses SQuAD v1.1, stored at:
+
+data/SQuAD-v1.1.csv
+
+
+During preprocessing:
+
+Text is chunked
+
+Lexical + vector indexes are built
+
+Chroma embeddings are created
+
+📊 Evaluation
+
+Run evaluation script:
+
+python run_evaluation.py
+
+
+Produces:
+
+retrieval metrics
+
+generation metrics
+
+verification accuracy
+
+plots (if enabled)
+
+Saved to:
+
+results/
+evaluation_results/
+
+🧹 What is not included (ignored via .gitignore)
+
+data/chroma_db/
+
+data/*.pkl
+
+results/
+
+evaluation_results/
+
+backend/*.log
+
+__pycache__/
+
+.env
+
+venv/
