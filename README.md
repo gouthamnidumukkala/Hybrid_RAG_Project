@@ -1,4 +1,4 @@
-# 🤖 Mahi Hybrid RAG Assistant
+# 🤖Hybrid RAG Assistant
 
 A professional-grade Retrieval Augmented Generation (RAG) system built with Streamlit, Ollama, and modern AI technologies.
 
